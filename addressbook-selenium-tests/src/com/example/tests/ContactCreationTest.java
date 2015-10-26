@@ -1,26 +1,24 @@
 package com.example.tests;
 
 import org.testng.annotations.Test;
-import org.testng.annotations.Test;
-import org.testng.annotations.Test;
 
 public class ContactCreationTest extends TestBase{
   @Test
   
   public void testEmptyContactCreation() throws Exception {
-   app.getNavigationHelper().openMainPage();
-   app.getContactHelper().gotoAddNewContact();
+   openMainPage();
+   gotoAddNewContact();
    ContactData contact = new ContactData();
-
-   app.getContactHelper().submitContactForm();
+// fillContactForm(contact);
+   submitContactForm();
    
-   app.getNavigationHelper().openMainPage();
+   openMainPage();
    }
   
   @Test
   public void testNonEmptyContactCreation() throws Exception {
 	 // openMainPage();
-    app.getContactHelper().gotoAddNewContact();
+    gotoAddNewContact();
     ContactData contact = new ContactData();
 	contact.firstname="lorem";
 	contact.lastname = "ipsum";
@@ -38,8 +36,8 @@ public class ContactCreationTest extends TestBase{
 	contact.phone2 = "city";
 			
 	
-    app.getContactHelper().fillContactForm(contact);
-    app.getContactHelper().submitContactForm();
-    app.getNavigationHelper().openMainPage();
+    fillContactForm(contact);
+    submitContactForm();
+    openMainPage();
   }
 }
