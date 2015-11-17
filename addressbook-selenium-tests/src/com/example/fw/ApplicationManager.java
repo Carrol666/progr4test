@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
+
 
 public class ApplicationManager {
 	
@@ -20,7 +20,7 @@ public class ApplicationManager {
 		 driver = new FirefoxDriver();
 		    baseUrl = "http://localhost:8888/";
 		    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	       
+		    driver.get(baseUrl + "/addressbookv4.1.4/");
 		}
 
 	public void stop() {
@@ -28,7 +28,7 @@ public class ApplicationManager {
 		   
 	}
     
-	public NavigationHelper getNavigationHelper() {
+	public NavigationHelper navigateTo() {
 	 if (navigationHelper == null) {
 		 navigationHelper = new NavigationHelper(this);
 	 }
