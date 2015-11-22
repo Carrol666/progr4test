@@ -49,7 +49,7 @@ public class ContactHelper extends HelperBase {
 		   return this;
 	}
 	
-	public ContactHelper modifyContact(int index, ContactData contact, boolean MODIFICATION) {
+	public ContactHelper modifyContact(int index, ContactData contact) {
 		gotoEditContactPage(index);
 	    fillContactForm(contact, MODIFICATION);
 	    submitUpdateContact();
@@ -83,7 +83,7 @@ public class ContactHelper extends HelperBase {
 	   // selectByText(By.name("new_group"), contact.selectgroup);
 	    }else{
 	    	if(driver.findElements(By.name("new_group")).size() != 0) {
-	      		throw new Error("Gourp se;ector exist in contact modification form");
+	      		throw new Error("Gourp selector exist in contact modification form");
 	    	}
 	    }
 	    

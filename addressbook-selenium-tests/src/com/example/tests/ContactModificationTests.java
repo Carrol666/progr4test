@@ -10,8 +10,6 @@ import java.util.Random;
 
 import org.testng.annotations.Test;
 
-import static com.example.fw.ContactHelper.MODIFICATION;
-
 	public class ContactModificationTests extends TestBase{
 
 		@Test(dataProvider = "randomValidContactGenerator")
@@ -23,7 +21,7 @@ import static com.example.fw.ContactHelper.MODIFICATION;
 			   Random rnd = new Random();
 			   int index = rnd.nextInt(oldList.size()-1);
 			  // actions
-		    app.getContactHelper().modifyContact(index, contact, MODIFICATION);
+		    app.getContactHelper().modifyContact(index, contact);
 		   	    
 		 // save new sate
 		    SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
