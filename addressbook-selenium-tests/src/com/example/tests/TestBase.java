@@ -19,6 +19,8 @@ import static com.example.tests.ContactDataGeneration.generateRandomContacts;
 public  class TestBase {
 	
 	protected static ApplicationManager app;
+	private int checkFrequency;
+	private int checkCounter;
     
 	
 		@BeforeTest
@@ -27,8 +29,20 @@ public  class TestBase {
 			Properties properties = new Properties();
 			properties.load(new FileReader(new File(configFile)));
 			app = new ApplicationManager(properties);
+			checkCounter = 0;
+			checkFrequency = Integer.parseInt(properties.getProperty("check.frequency", "0"));
 	   	  }
 
+	protected boolean wantToCheck() {
+		checkCounter++;
+		if (checkCounter > checkFrequency) {
+		 checkCounter = 0;
+		 return true;
+	    } else {
+	     return false;	
+	    }
+	}
+		
 	@AfterTest
 	public void tearDown() throws Exception {
 		app.stop();

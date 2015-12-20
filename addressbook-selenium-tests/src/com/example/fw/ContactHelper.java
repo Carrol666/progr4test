@@ -10,42 +10,32 @@ import org.openqa.selenium.WebElement;
 import com.example.tests.ContactData;
 import com.example.utils.SortedListOf;
 
-public class ContactHelper extends HelperBase {
+public class ContactHelper extends WebDriverHelperBase {
 	
 	public static boolean CREATION = true;
 	public static boolean MODIFICATION = false;
-	
-	
-	
 	public ContactHelper(ApplicationManager manager) {
 		super(manager);
 	}
 
-	private SortedListOf<ContactData> cachedContacts;
-		
-	public SortedListOf<ContactData> getContacts() {
-		if(cachedContacts == null){
-		    rebuildCache();
-		  }
-		  return cachedContacts;
-	}
-
-	private void rebuildCache() {
-		cachedContacts = new SortedListOf<ContactData>();
+	
+	public SortedListOf<ContactData> getUiContacts() {
+		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
 		List<WebElement> lastNames = driver.findElements(By.xpath("//tr[@name='entry']//td[2]"));
 		List<WebElement> firstNames = driver.findElements(By.xpath("//tr[@name='entry']//td[3]"));
 		for (int i = 0; i < firstNames.size(); i++) {
  			String lastname = lastNames.get(i).getText();
  			String firstname = firstNames.get(i).getText();
- 			cachedContacts.add(new ContactData().withLastname(lastname).withFirstname(firstname));
+ 			contacts.add(new ContactData().withLastname(lastname).withFirstname(firstname));
  		}
+		return contacts;
 	}
 
 	public ContactHelper createContact(ContactData contact, boolean CREATION) {
 		   gotoAddNewContact();
 		   fillContactForm(contact, CREATION);
 		   submitContactForm();
-		   rebuildCache();
+		   manager.getModel().addContact(contact);
 		   return this;
 	}
 	
@@ -53,14 +43,14 @@ public class ContactHelper extends HelperBase {
 		gotoEditContactPage(index);
 	    fillContactForm(contact, MODIFICATION);
 	    submitUpdateContact();
-	    rebuildCache();
+	    manager.getModel().removeContact(index).addContact(contact);
 		return this;
 	}
 	
 	public ContactHelper deleteContact(int index) {
 		 gotoEditContactPage(index);
 	     submitDeleteContact();
-	     rebuildCache();
+	     manager.getModel().removeContact(index);
 	     return this;
 	}
 	
